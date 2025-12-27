@@ -72,14 +72,13 @@ function initIntroAnimation() {
 
     const intro = document.getElementById('intro');
     const title = document.querySelector('.intro-title');
-    title.style.visibility = 'hidden';
 
-    // Crear pre-intro din�micamente (varias l�neas con "portfolio")
+    // Crear pre-intro dinámicamente (varias líneas con "portfolio")
     const preIntro = document.createElement('div');
     preIntro.className = 'pre-intro';
     preIntro.setAttribute('aria-hidden', 'true');
 
-    // N�mero de l�neas (ajusta si quieres m�s/menos)
+    // Número de líneas (ajusta si quieres más/menos)
     const lines = 12;
     for (let i = 0; i < lines; i++) {
         const w = document.createElement('div');
@@ -88,13 +87,13 @@ function initIntroAnimation() {
         preIntro.appendChild(w);
     }
 
-    // Insertar la pre-intro antes del t�tulo (cubre la pantalla)
+    // Insertar la pre-intro antes del título (cubre la pantalla)
     intro.insertBefore(preIntro, title);
 
     const introTl = gsap.timeline({
         onComplete: () => {
             intro.remove();
-            initHeroAnimations(); // Arranca el hero DESPU�S de la intro
+            initHeroAnimations(); // Arranca el hero DESPUÉS de la intro
         },
     });
 
@@ -102,12 +101,12 @@ function initIntroAnimation() {
     // 1) Entradas en cascada de las palabras "portfolio"
     // 2) Breve pausa
     // 3) Salida en cascada hacia arriba (desaparecen)
-    // 4) Reutilizamos la animaci�n original del t�tulo 'urdiales'
+    // 4) Reutilizamos la animación original del título 'urdiales'
     introTl
-        .to(preIntro.querySelectorAll('.pre-word'), {
-            opacity: 1,
-            y: 0,
-            scale: 1,
+        .from(preIntro.querySelectorAll('.pre-word'), {
+            opacity: 0,
+            y: 40,
+            scale: 1.05,
             stagger: 0.05,
             duration: 0.35,
             ease: 'power2.out',
@@ -121,7 +120,8 @@ function initIntroAnimation() {
             ease: 'power2.in',
         })
         .add(() => {
-            // Despu�s de ocultar preIntro, mostramos el t�tulo "urdiales"
+            // Después de ocultar preIntro, podemos mostrar el título "urdiales"
+            // (lo dejaremos visible para que la animación siguiente lo anime)
             title.style.visibility = 'visible';
         })
         .from(title, {
@@ -144,6 +144,17 @@ function initIntroAnimation() {
         });
 }
 
+
+/**
+ * Hero section animations: entrance sequence + floating elements + parallax
+ *
+ * 🎓 KEY GSAP CONCEPTS DEMONSTRATED:
+ * - gsap.timeline() for sequenced animations
+ * - gsap.to() and gsap.from() for tweening
+ * - Position parameters for overlap control
+ * - Infinite looping with repeat: -1
+ * - ScrollTrigger with scrub for parallax
+ */
 function initHeroAnimations() {
 	// Guard clause: Skip all hero animations if reduced motion is preferred
 	if (prefersReducedMotion) return;
@@ -580,7 +591,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	initNavbarScroll();
 	initSmoothScroll();
 
-
 	window.addEventListener('load', () => {
 		ScrollTrigger.refresh();
 	});
@@ -595,5 +605,3 @@ window.cleanupAnimations = () => {
 	ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 	gsap.killTweensOf('*');
 };
-
-

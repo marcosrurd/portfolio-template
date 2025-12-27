@@ -377,10 +377,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* --------------------------------------------------------------------------
-   PRE-INTRO ANIMATION
-   -------------------------------------------------------------------------- */
-
+/* Pre-intro: Repetición de "portfolio" que ocupa pantalla */
 .pre-intro {
     position: absolute;
     inset: 0;
@@ -397,7 +394,7 @@ body {
     color: var(--bs-body-color);
     font-weight: 700;
     font-size: clamp(2rem, 8vw, 6rem);
-    opacity: 0;
+    opacity: 0; /* animado por GSAP */
     letter-spacing: 0.18em;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: lowercase;
@@ -410,6 +407,3 @@ body {
         letter-spacing: 0.12em;
     }
 }
-
-
-
