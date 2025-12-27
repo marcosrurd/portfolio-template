@@ -7,13 +7,13 @@
    1. CSS Custom Properties
    -------------------------------------------------------------------------- */
 :root {
-	--bs-body-bg: #0f0f0f;
-	--bs-body-color: #f5f5f5;
+	--bs-body-bg: #ffffff;
+	--bs-body-color: #111111;
 	--bs-primary: #6366f1;
 	--bs-primary-rgb: 99, 102, 241;
 
 	/* Custom tokens */
-	--color-bg-alt: #1a1a1a;
+	--color-bg-alt: #f8f9fa;
 	--color-muted: #6c757d;
 	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -26,8 +26,13 @@ body {
 	color: var(--bs-body-color);
 }
 
+/* Use Manrope (Google Fonts) site-wide */
+body, button, input, textarea, select {
+	font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
 .bg-dark {
-	background-color: var(--color-bg-alt) !important;
+	background-color: var(--bs-body-bg) !important;
 }
 
 /* Section spacing */
@@ -40,19 +45,55 @@ body {
    3. Navigation
    -------------------------------------------------------------------------- */
 .navbar {
-	background: rgba(15, 15, 15, 0.85);
-	backdrop-filter: blur(12px);
-	-webkit-backdrop-filter: blur(12px);
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
 	transition: background 0.3s;
 }
 
+/* Compact header styles */
+.navbar {
+	padding-top: 0.2rem;
+	padding-bottom: 0.2rem;
+}
+
+.navbar .navbar-brand {
+	font-size: 0.95rem; /* slightly smaller brand */
+	font-weight: 600;
+	letter-spacing: 0.02em;
+}
+
 .navbar.scrolled {
-	background: rgba(15, 15, 15, 0.95);
+	background: rgba(255, 255, 255, 0.99);
 }
 
 .nav-link {
 	position: relative;
 	padding: 0.5rem 1rem !important;
+	color: var(--bs-body-color);
+}
+
+/* Make right-side nav items smaller, thin and lowercase */
+.navbar-nav .nav-link {
+	font-size: 0.85rem;
+	font-weight: 300;
+	text-transform: lowercase;
+	opacity: 0.95;
+	padding: 0.25rem 0.5rem !important;
+}
+
+.navbar-nav .nav-item + .nav-item {
+	margin-left: 0.25rem;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+	color: var(--bs-body-color) !important;
+}
+
+.nav-link:hover,
+.navbar .navbar-brand:hover {
+	color: var(--bs-primary) !important;
 }
 
 .nav-link::after {
@@ -61,8 +102,9 @@ body {
 	bottom: 0;
 	left: 50%;
 	width: 0;
-	height: 2px;
-	background: var(--bs-primary);
+	height: 3px; /* barra más visible */
+	background: #f5c542; /* amarillo */
+	border-radius: 2px;
 	transition: width 0.3s, left 0.3s;
 }
 
@@ -76,7 +118,7 @@ body {
    4. Hero Section
    -------------------------------------------------------------------------- */
 .hero {
-	background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+	background: var(--bs-body-bg);
 }
 
 .hero-bg {
@@ -125,10 +167,12 @@ body {
 
 .hero-title {
 	letter-spacing: -0.03em;
+	color: var(--bs-body-color);
 }
 
 .hero-subtitle {
-	opacity: 0.8;
+	opacity: 0.85;
+	color: var(--color-muted);
 }
 
 /* Scroll indicator */
@@ -139,7 +183,7 @@ body {
 .mouse {
 	width: 26px;
 	height: 42px;
-	border: 2px solid rgba(255, 255, 255, 0.5);
+	border: 2px solid rgba(17, 17, 17, 0.25);
 	border-radius: 13px;
 	position: relative;
 }
@@ -152,7 +196,7 @@ body {
 	transform: translateX(-50%);
 	width: 4px;
 	height: 8px;
-	background: rgba(255, 255, 255, 0.7);
+	background: rgba(17, 17, 17, 0.7);
 	border-radius: 2px;
 	animation: scrollMouse 1.5s ease-in-out infinite;
 }
@@ -176,17 +220,35 @@ body {
 }
 
 .about-image::before {
-	content: '';
-	position: absolute;
-	inset: 20px -20px -20px 20px;
-	border: 2px solid var(--bs-primary);
-	border-radius: 1rem;
-	z-index: -1;
+	content: none; /* remove decorative border frame */
 }
 
 .about-image img {
 	position: relative;
 	z-index: 1;
+	border-radius: 0; /* no rounded corners */
+	max-width: 100%;
+	width: clamp(250px, 50vw, 400px); /* smaller image */
+}
+
+/* About section dark theme */
+#about {
+	background-color: #000000 !important;
+	color: #ffffff;
+}
+
+#about h2,
+#about .lead,
+#about p {
+	color: #ffffff;
+}
+
+#about .text-muted {
+	color: #d0d0d0 !important;
+}
+
+#about .fw-semibold {
+	color: #ffffff;
 }
 
 /* Skills progress bars */
@@ -247,6 +309,10 @@ body {
 
 .text-primary {
 	color: var(--bs-primary) !important;
+}
+
+.text-muted {
+	color: var(--color-muted) !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -360,7 +426,7 @@ body {
 .intro {
 	position: fixed;
 	inset: 0;
-	background-color: #0f0f0f;
+	background-color: #ffffff; /* blanco: fondo inicial deseado */
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -368,13 +434,14 @@ body {
 }
 
 .intro-title {
-    font-size: clamp(3rem, 10vw, 8rem);
-    font-weight: 800;
-    letter-spacing: 0.2em;
-    color: var(--bs-body-color);
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	font-size: clamp(4rem, 12vw, 10rem);
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	color: #111111; /* texto oscuro sobre fondo blanco */
+	font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-transform: none;
 }
 
 /* --------------------------------------------------------------------------
@@ -394,14 +461,14 @@ body {
 }
 
 .pre-word {
-    color: var(--bs-body-color);
-    font-weight: 700;
-    font-size: clamp(2rem, 8vw, 6rem);
-    opacity: 0;
-    letter-spacing: 0.18em;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-transform: lowercase;
-    line-height: 0.9;
+	color: #c8c8c8; /* gris para la pre-intro */
+	font-weight: 700;
+	font-size: clamp(2rem, 8vw, 6rem);
+	opacity: 0;
+	letter-spacing: 0.18em;
+	font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	text-transform: lowercase;
+	line-height: 0.9;
 }
 
 @media (max-width: 575.98px) {
@@ -409,6 +476,96 @@ body {
         font-size: clamp(1.6rem, 10vw, 3.2rem);
         letter-spacing: 0.12em;
     }
+}
+
+/* --------------------------------------------------------------------------
+   Projects scroller (hero) - horizontal auto-scroll of square thumbnails
+   -------------------------------------------------------------------------- */
+.projects-scroller {
+	position: absolute; /* overlay above hero content */
+	left: 50%;
+	top: 8%; /* move a bit higher so the bar sits more prominently above the title */
+	transform: translateX(-50%);
+	width: 500%;
+	max-width: 2500px; /* allow the bar to occupy more horizontal space */
+	overflow: visible; /* allow hovered image to expand downward */
+	padding-bottom: 0.75rem; /* extra space for expanded image */
+	z-index: 12;
+}
+
+.scroller-track {
+	display: flex;
+	gap: 1.25rem; /* slightly larger gap for bigger thumbnails */
+	align-items: flex-start; /* align thumbnails to top */
+	flex-wrap: nowrap; /* ensure one single row for seamless looping */
+	/* Duplicate content approach: animate to -50% so duplicated set provides seamless loop */
+	animation: scroll-left 40s linear infinite; /* slower for bigger images */
+}
+
+/* Use flex-basis as thumbnail size and keep square shape with aspect-ratio */
+.scroller-item {
+	flex: 1 1 360px; /* larger default square thumbnails */
+	aspect-ratio: 1 / 1; /* maintain square */
+	transition: flex-basis 800ms cubic-bezier(0.22, 1, 0.36, 1), height 800ms cubic-bezier(0.22, 1, 0.36, 1);
+	overflow: visible;
+}
+
+.scroller-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 0; /* no rounded corners */
+	display: block;
+	transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 600ms cubic-bezier(0.22, 1, 0.36, 1);
+	transform-origin: top center; /* grow downward from top */
+}
+
+/* When hovering the whole scroller, slightly shrink non-hovered thumbnails */
+
+	/* no-op: keep thumbnails size when hovering the scroller area */
+	/* Intentionally empty to avoid shrinking the whole bar on container hover */
+
+
+/* The hovered thumbnail grows square; others will move aside due to flex basis change */
+.projects-scroller .scroller-item:hover {
+	flex-basis: 700px; /* reduced growth to be less aggressive */
+}
+
+.projects-scroller .scroller-item:hover img {
+	transform: scale(1.01);
+	box-shadow: 0 14px 36px rgba(17,17,17,0.16);
+	z-index: 5;
+}
+
+/* Pause scrolling on hover of the scroller area (desktop) */
+.projects-scroller:hover .scroller-track {
+	animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+	from { transform: translateX(0); }
+	to   { transform: translateX(-50%); }
+}
+
+/* ensure images remain accessible on small screens */
+@media (max-width: 575.98px) {
+	.scroller-item { flex-basis: 130px; }
+	.projects-scroller .scroller-item:hover { flex-basis: 180px; }
+}
+
+/* --------------------------------------------------------------------------
+   Remove decorative colored background/shapes from hero for clean white look
+   -------------------------------------------------------------------------- */
+.hero-bg {
+	background: transparent !important;
+}
+
+.floating-shapes,
+.shape,
+.shape-1,
+.shape-2,
+.shape-3 {
+	display: none !important;
 }
 
 

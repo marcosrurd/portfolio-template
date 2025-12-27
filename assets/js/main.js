@@ -440,6 +440,64 @@ function initSkillBars() {
 // 5. PROJECT CARDS STAGGER ANIMATION
 // ==========================================================================
 
+// ==========================================================================
+// Infinite projects scroller (GSAP-based)
+// ==========================================================================
+
+function initInfiniteScroller() {
+	const scroller = document.querySelector('.projects-scroller');
+	if (!scroller) return;
+
+	const track = scroller.querySelector('.scroller-track');
+	if (!track) return;
+
+	// Ensure duplication: if track children count is small or odd, clone once
+	const children = Array.from(track.children);
+	if (children.length > 0) {
+		const half = Math.floor(children.length / 2);
+		if (half === 0 || children.length % 2 !== 0) {
+			children.forEach((c) => track.appendChild(c.cloneNode(true)));
+		}
+	}
+
+	let tween;
+
+	function createTween() {
+		if (tween) tween.kill();
+
+		// Force layout
+		gsap.set(track, { x: 0 });
+
+		const totalWidth = track.scrollWidth;
+		const halfWidth = totalWidth / 2;
+		if (!halfWidth || halfWidth <= 0) return;
+
+		// px per second speed — tweak this to taste
+		const pxPerSecond = 80;
+		const duration = Math.max(12, halfWidth / pxPerSecond);
+
+		tween = gsap.to(track, {
+			x: -halfWidth,
+			duration: duration,
+			ease: 'none',
+			repeat: -1,
+		});
+	}
+
+	createTween();
+
+	// Pause/resume on hover
+	scroller.addEventListener('mouseenter', () => { if (tween) tween.pause(); }, { passive: true });
+	scroller.addEventListener('mouseleave', () => { if (tween) tween.resume(); }, { passive: true });
+
+	// Recreate on resize (debounced)
+	let rt;
+	window.addEventListener('resize', () => {
+		clearTimeout(rt);
+		rt = setTimeout(() => createTween(), 200);
+	});
+}
+
 /**
  * Batch animation for project cards with staggered reveal
  *
@@ -577,6 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initScrollReveals();
 	initSkillBars();
 	initProjectCards();
+	initInfiniteScroller();
 	initNavbarScroll();
 	initSmoothScroll();
 
