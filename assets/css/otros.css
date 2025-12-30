@@ -103,7 +103,7 @@ body, button, input, textarea, select {
 	left: 50%;
 	width: 0;
 	height: 3px; /* barra más visible */
-	background: #f5c542; /* amarillo */
+	background: #000000; /* amarillo */
 	border-radius: 2px;
 	transition: width 0.3s, left 0.3s;
 }
@@ -166,8 +166,19 @@ body, button, input, textarea, select {
 }
 
 .hero-title {
-	letter-spacing: -0.03em;
-	color: var(--bs-body-color);
+	font-size: clamp(3.5rem, 12vw, 9rem);
+	font-weight: 800;
+	letter-spacing: -0.04em;
+	line-height: 0.95;
+	
+}
+
+.hero-title2 {
+	font-size: clamp(3.5rem, 12vw, 9rem);
+	font-weight: 500;
+	line-height: 0.95;
+	margin-bottom: 1.5rem;
+
 }
 
 .hero-subtitle {
