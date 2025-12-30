@@ -173,6 +173,7 @@ body, button, input, textarea, select {
 	
 }
 
+
 .hero-title2 {
 	font-size: clamp(3.5rem, 12vw, 9rem);
 	font-weight: 500;
