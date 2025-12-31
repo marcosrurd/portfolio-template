@@ -639,6 +639,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	initInfiniteScroller();
 	initNavbarScroll();
 	initSmoothScroll();
+	initThemeToggle();
+	initProjectImages();
 
 
 	window.addEventListener('load', () => {
@@ -646,9 +648,138 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 });
 
+// ==========================================================================
+// 10. Project Images & Lightbox
+// ==========================================================================
+
+function initProjectImages() {
+	const projectCards = document.querySelectorAll('.project-card');
+	const lightbox = document.getElementById('imageLightbox');
+	const lightboxImage = document.getElementById('lightboxImage');
+	const lightboxClose = document.querySelector('.lightbox-close');
+	const lightboxPrev = document.querySelector('.lightbox-prev');
+	const lightboxNext = document.querySelector('.lightbox-next');
+	const lightboxCounter = document.querySelector('.lightbox-index');
+	
+	let currentLightboxImages = [];
+	let currentLightboxIndex = 0;
+
+	projectCards.forEach((card) => {
+		const wrapper = card.querySelector('.card-img-wrapper');
+		const images = card.querySelectorAll('.project-img');
+		const prevBtn = card.querySelector('.prev-btn');
+		const nextBtn = card.querySelector('.next-btn');
+		const counter = card.querySelector('.current-index');
+		let currentIndex = 0;
+
+		// Navigate images in card
+		function showImage(index) {
+			images.forEach((img, i) => {
+				img.classList.remove('active');
+				if (i === index) {
+					img.classList.add('active');
+				}
+			});
+			counter.textContent = index + 1;
+			currentIndex = index;
+		}
+
+		prevBtn.addEventListener('click', (e) => {
+			e.stopPropagation();
+			currentIndex = (currentIndex - 1 + images.length) % images.length;
+			showImage(currentIndex);
+		});
+
+		nextBtn.addEventListener('click', (e) => {
+			e.stopPropagation();
+			currentIndex = (currentIndex + 1) % images.length;
+			showImage(currentIndex);
+		});
+
+		// Open lightbox on image click
+		wrapper.addEventListener('click', () => {
+			currentLightboxImages = Array.from(images);
+			currentLightboxIndex = currentIndex;
+			updateLightbox();
+			lightbox.classList.add('active');
+			document.body.style.overflow = 'hidden';
+		});
+	});
+
+	// Lightbox navigation
+	function updateLightbox() {
+		const img = currentLightboxImages[currentLightboxIndex];
+		lightboxImage.src = img.src;
+		lightboxCounter.textContent = currentLightboxIndex + 1;
+	}
+
+	lightboxClose.addEventListener('click', () => {
+		lightbox.classList.remove('active');
+		document.body.style.overflow = '';
+	});
+
+	lightboxPrev.addEventListener('click', () => {
+		currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxImages.length) % currentLightboxImages.length;
+		updateLightbox();
+	});
+
+	lightboxNext.addEventListener('click', () => {
+		currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxImages.length;
+		updateLightbox();
+	});
+
+	// Close lightbox on background click
+	lightbox.addEventListener('click', (e) => {
+		if (e.target === lightbox) {
+			lightbox.classList.remove('active');
+			document.body.style.overflow = '';
+		}
+	});
+
+	// Keyboard navigation
+	document.addEventListener('keydown', (e) => {
+		if (!lightbox.classList.contains('active')) return;
+		
+		if (e.key === 'ArrowLeft') {
+			currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxImages.length) % currentLightboxImages.length;
+			updateLightbox();
+		} else if (e.key === 'ArrowRight') {
+			currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxImages.length;
+			updateLightbox();
+		} else if (e.key === 'Escape') {
+			lightbox.classList.remove('active');
+			document.body.style.overflow = '';
+		}
+	});
+}
 
 // ==========================================================================
-// 9. Cleanup (for SPA environments)
+// 11. Theme Toggle
+// ==========================================================================
+
+function initThemeToggle() {
+	const themeToggle = document.getElementById('theme-toggle');
+	const htmlElement = document.documentElement;
+	
+	// Check for saved theme preference or default to light mode
+	const savedTheme = localStorage.getItem('theme') || 'light';
+	
+	// Apply saved theme on page load
+	if (savedTheme === 'dark') {
+		document.body.classList.add('dark-mode');
+		htmlElement.setAttribute('data-bs-theme', 'dark');
+	}
+	
+	// Toggle theme on button click
+	themeToggle.addEventListener('click', () => {
+		const isDarkMode = document.body.classList.toggle('dark-mode');
+		htmlElement.setAttribute('data-bs-theme', isDarkMode ? 'dark' : 'light');
+		localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+	});
+}
+
+// ==========================================================================
+// 12. Cleanup (for SPA environments)
 // ==========================================================================
 
 window.cleanupAnimations = () => {
