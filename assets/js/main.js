@@ -198,6 +198,12 @@ function initHeroAnimations() {
 			opacity: 0,       // Start invisible
 			duration: 1,      // Take 1 second to animate
 		})
+		// Also animate the secondary title (portfolio) with similar entrance
+		.from('.hero-title2', {
+			y: 90,
+			opacity: 0,
+			duration: 1,
+		}, '-=0.9')
 		// Second: Subtitle follows (overlaps by 0.6s for smooth flow)
 		.from(
 			'.hero-subtitle',
@@ -667,6 +673,7 @@ function initProjectImages() {
 	projectCards.forEach((card) => {
 		const wrapper = card.querySelector('.card-img-wrapper');
 		const images = card.querySelectorAll('.project-img');
+		const thumbs = card.querySelectorAll('.project-thumb');
 		const prevBtn = card.querySelector('.prev-btn');
 		const nextBtn = card.querySelector('.next-btn');
 		const counter = card.querySelector('.current-index');
@@ -680,6 +687,12 @@ function initProjectImages() {
 					img.classList.add('active');
 				}
 			});
+			// Update thumbnail active state if thumbnails exist
+			if (thumbs && thumbs.length) {
+				thumbs.forEach((t, ti) => {
+					if (ti === index) t.classList.add('active'); else t.classList.remove('active');
+				});
+			}
 			counter.textContent = index + 1;
 			currentIndex = index;
 		}
@@ -695,6 +708,18 @@ function initProjectImages() {
 			currentIndex = (currentIndex + 1) % images.length;
 			showImage(currentIndex);
 		});
+
+		// Thumbnail click handlers
+		if (thumbs && thumbs.length) {
+			thumbs.forEach((t, i) => {
+				t.addEventListener('click', (ev) => {
+					ev.stopPropagation();
+					showImage(i);
+				});
+			});
+			// set initial active thumb
+			showImage(currentIndex);
+		}
 
 		// Open lightbox on image click
 		wrapper.addEventListener('click', () => {

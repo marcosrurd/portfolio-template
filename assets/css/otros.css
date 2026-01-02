@@ -302,7 +302,7 @@ body.dark-mode .navbar.scrolled {
 	overflow: hidden;
 	transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
 	display: flex;
-	flex-direction: column;
+	flex-direction: column; /* mobile-first: stack */
 	height: 100%;
 }
 
@@ -432,6 +432,82 @@ body.dark-mode .nav-btn:hover {
 
 .text-muted {
 	color: var(--color-muted) !important;
+}
+
+/* Projects: stacked on mobile, side-by-side on wider screens */
+@media (min-width: 768px) {
+	.project-card {
+		flex-direction: row;
+		gap: 1.5rem;
+		align-items: stretch;
+	}
+
+	.project-card .card-img-wrapper {
+		flex: 0 0 60%;
+		aspect-ratio: 16/10;
+		height: auto;
+	}
+
+	.project-card .card-body {
+		flex: 1 1 40%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+}
+
+/* Thumbnails inside project cards */
+.project-thumbs {
+	align-items: center;
+}
+.project-thumbs img.project-thumb {
+	width: 72px;
+	height: 72px;
+	object-fit: cover;
+	cursor: pointer;
+	opacity: 0.9;
+	border: 2px solid transparent;
+}
+.project-thumbs img.project-thumb:hover {
+	opacity: 1;
+}
+.project-thumbs img.project-thumb.active {
+	border-color: var(--bs-primary);
+	opacity: 1;
+}
+
+/* Make badges neutral inside project cards (remove colored category style) */
+.project-card .badge {
+	background-color: rgba(0,0,0,0.05);
+	color: var(--color-muted);
+	border-radius: 4px;
+	padding: 0.25rem 0.5rem;
+	font-size: 0.8rem;
+}
+
+/* Contact section: smaller, cleaner */
+#contact h2 {
+	font-size: 2rem;
+}
+#contact p.lead {
+	font-size: 0.95rem;
+	color: var(--color-muted);
+}
+
+/* Custom contact button */
+.btn-contact {
+	background: #000000;
+	color: #ffffff !important;
+	padding: 0.5rem 1rem;
+	font-weight: 600;
+	font-size: 0.95rem;
+	border-radius: 4px;
+	display: inline-block;
+}
+.btn-contact:hover {
+	background: #111111;
+	color: #ffffff;
+	transform: translateY(-1px);
 }
 
 /* --------------------------------------------------------------------------
@@ -617,8 +693,9 @@ body.dark-mode .nav-btn:hover {
 	gap: 1.25rem; /* slightly larger gap for bigger thumbnails */
 	align-items: flex-start; /* align thumbnails to top */
 	flex-wrap: nowrap; /* ensure one single row for seamless looping */
-	/* Duplicate content approach: animate to -50% so duplicated set provides seamless loop */
-	animation: scroll-left 40s linear infinite; /* slower for bigger images */
+	/* Duplicate content approach: JS (GSAP) handles continuous scrolling for seamless loop */
+	/* animation removed to avoid conflicts with JS tween */
+	will-change: transform;
 }
 
 /* Use flex-basis as thumbnail size and keep square shape with aspect-ratio */
