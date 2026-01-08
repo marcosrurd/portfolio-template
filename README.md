@@ -10,3 +10,7 @@
 ### Projects: Selección de proyectos mostrados mediante tarjetas interactivas.
 ### Contact: Información de contacto y enlaces a redes sociales.
 ### Además, en el header se encuentran los apartados de la web y cuentan con un botón para cambiar la web a modo oscuro.
+
+## Diseño de la web:
+### El diseño de la web se basa en una estética minimalista y sencilla, pensada para destacar el contenido de la web e inspirada en las webs de referencia que tenia a la hora de diseñar mi portfolio. La paleta de colores es simple donde destaca el blanco y el negro.Puede ser una elección simple y sencilla pero funciona bien al cambiar el modo de la web a modo oscuro.
+### La tipografía tiene buena legibilidad y las fotografias se encuentran en blanco y negro hasta pasar el raton por encima y asi ver en color la imagen. 
