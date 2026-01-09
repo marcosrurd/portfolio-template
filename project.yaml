@@ -1,0 +1,39 @@
+# Project metadata - fill this out by Week 4
+# This file will be used to generate your entry in the course showroom
+
+# Basic information
+handle: marcosrurd
+name: Marcos Rodríguez Urdiales
+email: marcos.rodriguez@alum.udit.es
+
+# URLs (will be auto-generated if you follow naming conventions)
+github_url: https://github.com/marcosrurd
+project_url: https://marcosrurd.github.io/portfolio-template/
+repository_url: https://github.com/marcosrurd/portfolio-template
+
+# Project details
+title:
+ es: Urdiales portfolio
+ en: Urdiales
+
+abstract:
+ es: |
+  Mi proyecto web es una plantilla de portafolio personal diseñada para mostrar mis habilidades y proyectos de diseño gráfico. 
+ en: |
+  My web project is a personal portfolio template designed to showcase my skills and graphic design projects.
+
+# Technical tags 
+tags:
+ - html5
+ - css3
+ - responsive-design
+ - accessibility
+
+# Learning objectives you're focusing on
+learning_focus:
+ - semantic-html
+ - mobile-first-design
+ - web-accessibility
+
+
+
